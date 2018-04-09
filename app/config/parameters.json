@@ -1,0 +1,8 @@
+{
+    "host":"localhost", 
+    "user":"wamp", 
+    "password":"", 
+    "db":"crypto", 
+    "dbms":"mysql",
+    "PDOPersistance":"True"
+}
