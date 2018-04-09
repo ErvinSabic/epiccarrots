@@ -3,14 +3,12 @@
 require('core/container/BaseController.php');
 require('core/data/Connection.php');
 require('core/routing/routing.php');
-require('core/data/BaseRepository.php');
-require('core/data/BaseEntity.php');
+require('core/data/BaseManager.php');
 
 use Core\Container\BaseController;
-use Core\Data\BaseEntity;
+use Core\Data\BaseManager;
 use Core\Routing\Route;
 use Core\Data\Connection;
-use Core\Data\BaseRepository;
 
 $route = new Route();
 $connection = new Connection();
@@ -22,19 +20,22 @@ $route->add('/contact');
 var_dump($route);
 var_dump($connection->getConnection());
 
-class ContactRepository extends BaseRepository {
-    public function __construct(){
-        parent::__construct("Contact");
-    }
-}
-$contactRepo = new ContactRepository;
+class Contact{
+    public $id; 
 
-class ContactEntity extends BaseEntity{
-    public function __construct($item){
-        parent::__construct($item);
+    public $name; 
+
+    public $phone; 
+}
+
+class ContactManager extends BaseManager {
+    public $options = [
+
+    ];
+    public function __construct(){
+        parent::__construct($this->options);
     }
 }
-$contactEntity = new ContactEntity($contactRepo);
-var_dump($contactRepo);
-var_dump($contactEntity);
+$Contact = new Contact;
+var_dump($Contact);
 ?>

@@ -4,7 +4,7 @@ namespace Core\Data;
 //require('core/data/Connection.php');
 use Core\Data\Connection;
 
-class BaseEntity {   
+class BaseManager {   
     protected $repository; 
 
     protected $connection; 
@@ -18,19 +18,30 @@ class BaseEntity {
     }
     /**
      * @param int $id
+     * @return BaseManager
      */
     public function find(int $id){
         
     }
     /**
-     * @param 
+     * @return BaseManager
      */
     public function findAll(){
+    
+    }
+    /**
+     * @param string $column 
+     * @param string $value
+     * @return BaseManager
+     */
+    public function findBy($column, $value){
 
     }
-    public function findRelationships(){
 
-    }
+    /**
+     * @param string $query
+     * @return BaseManager
+     */
     public function executeQuery($query){
 
     }
