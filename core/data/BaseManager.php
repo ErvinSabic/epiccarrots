@@ -21,13 +21,17 @@ class BaseManager {
      * @return BaseManager
      */
     public function find(int $id){
-        
+        $query = $this->connection->prepare("SELECT * FROM ".$this->repository."WHERE id = :id");
+        $query->bindParam(':id', $id);
+        return $query->execute();
+
     }
     /**
      * @return BaseManager
      */
     public function findAll(){
-    
+        $query = $this->connection->prepare("SELECT * FROM ".$this->repository);
+        return $query->execute();
     }
     /**
      * @param string $column 
@@ -35,15 +39,19 @@ class BaseManager {
      * @return BaseManager
      */
     public function findBy($column, $value){
-
+        $query = $this->connection->prepare("SELECT * FROM ".$this->repository." WHERE :column = :value"); 
+        $query->bindParam(':column', $column);
+        $query->bindParam(':value', $value);
+        return $query->execute();
     }
 
     /**
      * @param string $query
      * @return BaseManager
      */
-    public function executeQuery($query){
-
+    public function executeQuery($q){
+        $query = $this->connection->prepare($q); 
+        return $query->execute();
     }
 }
 
