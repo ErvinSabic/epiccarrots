@@ -5,15 +5,15 @@ namespace Core\Data;
 use Core\Data\Connection;
 
 class BaseManager {   
-    protected $repository; 
+    protected $options;
 
     protected $connection; 
 
     /**
      * @param object $repository
      */
-    public function __construct($repo){
-        $this->repository = $repo;
+    public function __construct($options){
+        $this->options = $options;
         $this->connection = New Connection;
     }
     /**

@@ -2,20 +2,22 @@
 namespace Core\Routing;
 
 class Route {
-    private $url = [];
+    private $uri = [];
 
     /**
-     * @param $url
+     * @param $uri
      */
-    public function add($url){
-        $this->_url[] = $url;
+    public function add($uri){
+        $this->_uri[] = $uri;
     }
 
     public function submit(){
-        $url = isset($_GET['url']) ? $_GET['url'] : '/';
+        $uri = isset($_GET['uri']) ? $_GET['uri'] : '/';
+        echo($uri);
 
-        foreach ($this->_url as $key => $value){
-            if (preg_match("#^$value#", $url))
+        foreach ($this->_uri as $key => $value){
+            echo($value ."<br>");
+            if (preg_match("#^$value#", $uri))
             {
                 echo "MATCH!";
             }
