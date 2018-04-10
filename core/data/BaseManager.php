@@ -38,7 +38,7 @@ class BaseManager {
      * @param string $value
      * @return BaseManager
      */
-    public function findBy($column, $value){
+    public function findBy(string $column, $value){
         $query = $this->connection->prepare("SELECT * FROM ".$this->repository." WHERE :column = :value"); 
         $query->bindParam(':column', $column);
         $query->bindParam(':value', $value);
@@ -49,7 +49,7 @@ class BaseManager {
      * @param string $query
      * @return BaseManager
      */
-    public function executeQuery($q){
+    public function executeQuery(string $q){
         $query = $this->connection->prepare($q); 
         return $query->execute();
     }
