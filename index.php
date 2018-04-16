@@ -1,40 +1,35 @@
 <?php 
+    /**
+     * DEV ENV
+     */
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    /**
+     * END DEV ENV
+     */
 
-require('core/container/BaseController.php');
-require('core/data/Connection.php');
-require('core/routing/routing.php');
-require('core/data/BaseManager.php');
+    require('core/core.php');
+    use Core\Container\BaseController;
+    use Core\Data\BaseManager;
+    use Core\Routing\Route;
+    use Core\Data\Connection;
+    use Core\Http\Request;
 
-use Core\Container\BaseController;
-use Core\Data\BaseManager;
-use Core\Routing\Route;
-use Core\Data\Connection;
-
-$route = new Route();
-
-$route->add('/');
-$route->add('/about');
-$route->add('/contact');
-$route->submit();
-var_dump($route);
-echo("<br>");
-
-class Contact{
-    public $id; 
-
-    public $name; 
-
-    public $phone; 
-}
-
-class ContactManager extends BaseManager {
-    public $options = [
-
-    ];
-    public function __construct(){
-        parent::__construct($this->options);
+    if(isset($_GET['route'])){
+        $route = new Route($_GET['route']);        
     }
-}
-$Contact = new Contact;
-var_dump($Contact);
+    else{
+        $route = new Route;        
+    }
+    $request = new Request($route->getRoute());
+    $requestData = [
+        'route'=>$route, 
+        'data'=>$_POST, 
+        'method'=>$_SERVER['REQUEST_METHOD']
+    ];
+    $request->setOptions($requestData);
+    echo '<pre>';    
+    var_dump($request);
+    echo '</pre>';    
 ?>
