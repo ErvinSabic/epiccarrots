@@ -1,4 +1,7 @@
 <?php 
+/**
+ * Make sure all depenencies are included.
+ */
     require_once('container/BaseController.php');
     require_once('data/Connection.php');
     require_once('routing/Routing.php');

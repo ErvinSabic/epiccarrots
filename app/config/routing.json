@@ -4,7 +4,7 @@
             "class":"", 
             "file":"",
             "function":"",
-            "requestType":""
+            "requiredRequestType":""
         }
     }
 }
