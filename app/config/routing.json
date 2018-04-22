@@ -1,10 +1,10 @@
 {
     "routes":{
-        "/home":{
-            "class":"", 
-            "file":"",
+        "/":{
+            "class":" ", 
+            "file":"src/Controller/TestController.php",
             "function":"",
-            "requiredRequestType":""
+            "requiredRequestType":"GET"
         }
     }
 }

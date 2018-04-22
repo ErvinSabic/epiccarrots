@@ -9,6 +9,7 @@ class Request {
     public $route;
 
     public $options;
+
     /**
      * @param string $action
      */
@@ -39,16 +40,16 @@ class Request {
      * @param array $options
      */
     public function setOptions($options){
-        foreach($options as $key=>$value){
-            $this->options[$key]=$value;
-        }
+        $this->options = $options;
     }
 
     /**
      * Fulfill Request Based On Options Set
      */
     public function serveRequest(){
-
+        $rds = new RouteDeserializer;
+        $response = $rds->ProcessRequest($this->options);
+        return $response;
     }
 }
 

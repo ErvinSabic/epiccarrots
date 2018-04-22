@@ -17,19 +17,20 @@
     use Core\Http\Request;
 
     if(isset($_GET['route'])){
-        $route = new Route($_GET['route']);        
+        $route = $_GET['route'];        
     }
     else{
-        $route = new Route;        
+        $route = '/';   
     }
-    $request = new Request($route->getRoute());
+    $request = new Request($route);
     $requestData = [
         'route'=>$route, 
         'data'=>$_POST, 
         'method'=>$_SERVER['REQUEST_METHOD']
     ];
     $request->setOptions($requestData);
+    $ret = $request->serveRequest();
     echo '<pre>';    
-    var_dump($request);
+    print_r($ret);
     echo '</pre>';    
 ?>
