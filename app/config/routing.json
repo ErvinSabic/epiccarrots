@@ -1,9 +1,9 @@
 {
     "routes":{
         "/":{
-            "class":" ", 
-            "file":"src/Controller/TestController.php",
-            "function":"",
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"IndexAction",
             "requiredRequestType":"GET"
         }
     }

@@ -17,10 +17,10 @@ class RouteDeserializer{
             die('Route not found. Did you set the route within the routing file?');
         }
 
-        if(!$options['method'] == $response->requiredRequestType)
+        if($options['method'] != $response->requiredRequestType)
         /** Check to see if the proper request type is being made*/
         {
-            die('Incorrect Request Type');
+            die('Incorrect Request Method');
         }
 
         /** Check to see if the file exists */
@@ -34,7 +34,13 @@ class RouteDeserializer{
         /** Check to see if the requested class exists */
         if(!class_exists($response->class)){
             die($response->class. " Does not exist. Did you misspell the class name within the routing file?");
+        }else {
+            $ret = new $response->class;
         }
+
+        /** Fire associated function */
+        $function = $response->function;
+        return $ret->{$function}($options['data']);
 
     }
 }
