@@ -11,6 +11,8 @@ class RenderEngine{
 
     protected $file;
 
+    protected $data;
+
     /**
      * @param string $template
      * @param array $data
@@ -28,6 +30,8 @@ class RenderEngine{
          */
         if($data == null){
             return $this->file;
+        }else {
+            $this->data = $data;
         }
         foreach($data as $itemKey=>$itemValue){
             /**
@@ -74,6 +78,8 @@ class RenderEngine{
      */
     public function executeFunction($function, $params = null){
         $functionEngine = new TemplateFunctions($this->file);
+        $functionEngine->setData($this->data);
+        $functionEngine->serveFunction($function, $params);
         
     }
 

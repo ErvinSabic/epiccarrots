@@ -5,6 +5,8 @@ Class TemplateFunctions {
 
     protected $content;
     
+    protected $data; 
+
     protected $availableFunctions = [
         'extends' => 'renderMaster',
         'foreach' => 'renderForeach', 
@@ -19,7 +21,12 @@ Class TemplateFunctions {
         $this->content = $page;
     }
 
+    public function setData($data){
+        $this->data = $data;
+    }
+
     public function serveFunction($functionString, $location){
+        return "ok";
 
     }
 
@@ -28,7 +35,9 @@ Class TemplateFunctions {
     }
     
     public function renderForeach(){
-
+        if($this->data == null){
+            die('You cannot fire a foreach statement without data');
+        }
     }
 
     public function renderEndforeach(){
@@ -48,7 +57,7 @@ Class TemplateFunctions {
     }
 
     public function renderBlock(){
-        
+
     }
 }
 
