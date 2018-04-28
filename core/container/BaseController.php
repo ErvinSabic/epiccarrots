@@ -2,28 +2,15 @@
 
 namespace Core\Container; 
 
+use Core\Templating\RenderEngine;
+
 class BaseController{
     /**
      * Render a file and replace all parmas with curly brackets 
      */
-    public function render($template, $data = null){
-        /** Check to see if file exists */
-        if(file_exists($template)){
-            $file = file_get_contents($template);
-            /** Check to see if file has data associated with it */
-            if($data != null){
-                foreach($data as $itemKey=>$itemValue){
-                    $file = \preg_replace("/\{".$itemKey."\}/",$itemValue,$file);
-                }
-                eval('?>' . $file . '<?php');
-            }
-            else{
-                return $file;
-            }
-        }
-        else {
-            die('File was not found');
-        }
+    public function render($template, $data){
+        $engine = new RenderEngine();
+        $engine->render($template, $data);
     }
 
     /**
