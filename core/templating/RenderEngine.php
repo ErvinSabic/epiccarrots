@@ -6,12 +6,7 @@ use Core\Templating\TemplateFunctions;
 class RenderEngine{
 
     protected $availableFunctions = [
-        'extends',
-        'foreach', 
-        'endblock',
-        'endif',
-        'if', 
-        'block'
+
     ];
 
     protected $file;
@@ -43,27 +38,32 @@ class RenderEngine{
             }
         }
         /**
-         * FUNCTIONS CHECK
+         * Run through functions engine
          */
-        $functions = preg_match("/\{\% .* \%\}/", $this->file, $functionInstances);
-        var_dump($functionInstances);
-        foreach($functionInstances as $itemKey => $itemValue){
-            $this->checkFunction($itemValue);
-        }
+        $functions = preg_match_all("/\{\% .* \%\}/", $this->file, $functionInstances);
+        $this->runFunctions($functionInstances[0], $data);
         return eval('?>' . $this->file . '<?php');
     }
 
     /**
      * @param string $function
+     * @param array $data
      */
-    public function checkFunction($pregString){
-
-        foreach($this->availableFunctions as $item){
-            $check = strpos($pregString, $item);
-            if($check !== false){
-                $this->runFunction($item);
-            }else {
-                echo "Template engine function exception: function ".$pregString." Not found. <br>";
+    public function runFunctions($pregString, $data = null){
+        $checked = [];
+        foreach($pregString as $string){
+            if((isset($checked[$string]))){
+                continue;
+            }
+            else {
+                foreach($this->availableFunctions as $item){
+                    if(strpos($string, $item) !== false and !isset($checked[$string])){
+                        $checked[$string]='Checked';
+                        $this->executeFunction($item, $string);
+                    }else {
+                        continue;
+                    }
+                }
             }
         }
     }
@@ -72,8 +72,9 @@ class RenderEngine{
      * @param string $function 
      * @param array $params
      */
-    public function runFunction($function, $params = null){
-        $functionEngine = new TemplateFunctions;
+    public function executeFunction($function, $params = null){
+        $functionEngine = new TemplateFunctions($this->file);
+        
     }
 
     /**
