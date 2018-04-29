@@ -1,7 +1,6 @@
 <?php 
 namespace Core\Data;
 
-//require('core/data/Connection.php');
 use Core\Data\Connection;
 
 class BaseManager {   

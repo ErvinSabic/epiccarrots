@@ -1,22 +1,16 @@
 <?php 
 
 use Core\Container\BaseController;
+use Core\Data\Connection;
 
 Class PublicController extends BaseController{
     public function IndexAction(){
-        $sampledata = [
-            [
-                'name'=>'name',
-                'email'=>'esabic@gearsite.net',
-                'address'=>'address'
-            ],
-            [
-                'name'=>'name',
-                'email'=>'elvishigh17@live.com',
-                'address'=>'other address'
-            ]
-        ];
-        $this->render('web/view/test.ba.html', ['test'=>'hello', 'thing1'=>$sampledata]);
+        $connection = new Connection;
+        $this->render('web/view/test.ba.html', ['test'=>'hello']);
+    }
+
+    public function AboutAction(){
+        echo "Hi";
     }
 }
 

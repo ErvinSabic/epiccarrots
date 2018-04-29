@@ -3,11 +3,18 @@
 namespace Core\Container; 
 
 use Core\Templating\RenderEngine;
+use Core\Data\Connection;
 
 class BaseController{
+    protected $connection;
+
+
+    public function __construct(){
+        $this->connection = new Connection;
+    }
     /**
-     * Render a file and replace all parmas with curly brackets 
-     */
+    * Render a file and replace all parmas with curly brackets 
+    */
     public function render($template, $data){
         $engine = new RenderEngine();
         $engine->render($template, $data);

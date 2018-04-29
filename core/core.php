@@ -13,6 +13,7 @@
      */
     require_once('data/Connection.php');
     require_once('data/BaseManager.php');
+    require_once('data/APIRequest.php');
     require_once('http/Request.php');
     /**
      * Rendering 

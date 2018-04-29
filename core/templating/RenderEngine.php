@@ -43,7 +43,7 @@ class RenderEngine{
          */
         $functions = preg_match_all("/\{\% .* \%\}/", $this->file, $functionInstances);
         $ret = $this->runFunctions($functionInstances[0], $data);
-        return eval('?>' .$ret. '<?php');
+        return eval('?>' .$ret->getRenderedResult(). '<?php');
     }
 
     /**
@@ -52,6 +52,7 @@ class RenderEngine{
      */
     public function runFunctions($pregString, $data = null){
         $engine = new TemplateFunctions($this->file);
+        $engine->setData($this->data);
         $this->availableFunctions = $engine->getAvailableFunctions(true);
         $checked = [];
         foreach($pregString as $string){
@@ -62,23 +63,14 @@ class RenderEngine{
                 foreach($this->availableFunctions as $item){
                     if(strpos($string, $item) !== false && !isset($checked[$string])){
                         $checked[$string]='Checked';
-                        $this->executeFunction($item, $string);
+                        $engine->serveFunction($item, $string);
                     }else {
                         continue;
                     }
                 }
             }
         }
-    }
-
-    /**
-     * @param string $function 
-     * @param array $params
-     */
-    public function executeFunction($function, $params = null){
-        $functionEngine = new TemplateFunctions($this->file);
-        $functionEngine->setData($this->data);
-        $functionEngine->serveFunction($function, $params);
+        return $engine;
     }
 
     /**

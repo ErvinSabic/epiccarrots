@@ -5,6 +5,12 @@
             "file":"src/Controller/PublicController.php",
             "function":"IndexAction",
             "requiredRequestType":"GET"
+        },
+        "/about":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"AboutAction",
+            "requiredRequestType":"GET"
         }
     }
 }

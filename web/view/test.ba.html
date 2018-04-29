@@ -1,13 +1,6 @@
-{% extends 'web/view/masters/base.html' %}
+{% extends 'web/view/masters/base.ba.html' %}
 
 {% I dont exist %}
 {% block 'body' %}
 {{test}}
-{% foreach 'thing1' as 'thing2' %}
-    <tr>
-        <td>{thing2.name}</td>
-        <td>{thing2.email}</td>
-        <td>{thing2.address}</td>
-    </tr>
-{% endforeach %}
 {% endblock 'body' %}

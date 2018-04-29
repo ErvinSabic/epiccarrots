@@ -11,13 +11,13 @@ Class TemplateFunctions {
      * Put the ones that end your function first. THEY MATTER
      */
     protected $availableFunctions = [
-        'endforeach'=>'renderEndForeach',
-        'endblock' => 'renderEndblock',
-        'endif' => 'renderEndif',
         'extends' => 'renderMaster',
-        'foreach' => 'renderForeach', 
+        'endblock' => 'renderEndblock',
+        'block' => 'renderBlock',
+        'endforeach'=>'renderEndForeach',
+        'foreach' => 'renderForeach',
         'if' => 'renderIf',
-        'block' => 'renderBlock' 
+        'endif' => 'renderEndif', 
     ];
 
     public function __construct($page){
@@ -53,13 +53,8 @@ Class TemplateFunctions {
      * @param string $location
      */
     public function serveFunction($functionString, $location){
-        /**
-         * DEV ONLY
-         */ 
-         /** $play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
-          echo $play; */
-         /** END DEV ONLY 
-         */
+        /**$play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
+        echo $play; */
         if(!isset($this->availableFunctions[$functionString])){
             die("Template Function Exception: '". $functionString. "' Could not be served. Did you misspell the function or not include it as an available function?");
         }
@@ -111,21 +106,29 @@ Class TemplateFunctions {
         }
         $innerRequest = $this->get_string_between($this->content, $param[0], "{% endforeach %}" );
         $innerMatch = preg_match_all("/\{".$displayed."\..*\}/", $innerRequest, $foreachMatches);
+        
         $prefix = $displayed;       
-        $ret = $innerRequest; 
+        $ret = '';
         foreach($foreachMatches[0] as $real){
             $a = str_replace("{".$prefix.".","",$real);
             $b = str_replace("}","",$a);
             $realKeys[$real]= $b;
         };
-        for($i = 0; $i!=count($this->data[$requestedData]); $i++){
+        $i = 0;
+        while($i != count($this->data[$requestedData])){
+            $ret = $ret.$innerRequest;            
             $currentData = $this->data[$requestedData][$i];
             foreach($realKeys as $realKey=>$realData){
-                preg_replace("/\{".$displayed."\.".$realData."\}/", $currentData[$realData],$ret);
+                $ret = str_replace($realKey, $currentData[$realData], $ret);
             }
-            $ret = $ret.$innerRequest;
-        };
-        print_r($foreachMatches);
+            $i++;
+        }
+        foreach($param as $item){
+            $this->content = str_replace($item, "", $this->content);
+            $this->content = str_replace("{% endforeach %}", "", $this->content);
+        }
+        $this->content = str_replace($innerRequest, $ret, $this->content);
+        
     }
 
     /**
@@ -166,7 +169,6 @@ Class TemplateFunctions {
             $endTag = "{% endblock ".$blockRenderedTemp[0] ." %}";
             $replacement = $this->get_string_between($this->content,$block,$endTag);
             $this->content = preg_replace("/\{\% block ".$blockRenderedTemp[0]." \%\}/", $replacement, $master);
-            echo $this->content;
         }
     }
 
@@ -176,6 +178,10 @@ Class TemplateFunctions {
         $ini += strlen($start);   
         $len = strpos($string,$end,$ini) - $ini;
         return substr($string,$ini,$len);
+    }
+    
+    public function getRenderedResult(){
+        echo $this->content;
     }
 }
 
