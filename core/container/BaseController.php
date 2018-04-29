@@ -3,15 +3,9 @@
 namespace Core\Container; 
 
 use Core\Templating\RenderEngine;
-use Core\Data\Connection;
+use Core\Data\RepositoryLoader; 
 
 class BaseController{
-    protected $connection;
-
-
-    public function __construct(){
-        $this->connection = new Connection;
-    }
     /**
     * Render a file and replace all parmas with curly brackets 
     */
@@ -33,6 +27,15 @@ class BaseController{
      */
     public function getConnection(){
         return $this->connection->getConnection();
+    }
+
+    /**
+     * Gets associated manager
+     */
+    public function getManager($requested){
+        $repositoryLoader = new RepositoryLoader; 
+        $response = $repositoryLoader->loadRepository($requested);
+        return $response;
     }
     
 }

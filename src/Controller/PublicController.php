@@ -10,6 +10,8 @@ Class PublicController extends BaseController{
     public function IndexAction(){
         $APIManager = new APIManager;
         $data = $APIManager->getRequest('https://api.coinmarketcap.com/v1/ticker/?limit=5');
+        $commentManager = $this->getManager("Comment");
+        $dump = $commentManager->findAll();
         return $this->render('web/view/home.ba.html', ['cryptos'=>$data]);
     }
 

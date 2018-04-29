@@ -1,10 +1,14 @@
 {
     "Repositories":{
         "Comment":{
-            "table":"comment"
+            "table":"comment",
+            "manager":"CommentManager",
+            "file":"src/Managers/CommentManager.php"
         },
         "User":{
-            "table":"user"
+            "table":"user",
+            "manager":"",
+            "file":""
         }
     }
 }
