@@ -14,7 +14,7 @@ class RenderEngine{
      * @param string $template
      * @param array $data
      */
-    public function render($template, $data = null){
+    public function render($template, $data = ['']){
         /** Check to see if file exists */
         if(!file_exists($template)){
             die("Template file does not exist. File: ".$template);

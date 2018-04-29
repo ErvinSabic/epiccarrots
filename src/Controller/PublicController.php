@@ -8,15 +8,16 @@ Class PublicController extends BaseController{
      * @Route("/")
      */
     public function IndexAction(){
-        $connection = $this->getConnection();
-        $this->render('web/view/home.ba.html', ['test'=>'hello']);
+        $APIManager = new APIManager;
+        $data = $APIManager->getRequest('https://api.coinmarketcap.com/v1/ticker/?limit=5');
+        return $this->render('web/view/home.ba.html', ['cryptos'=>$data]);
     }
 
     /**
      * @Route("/about")
      */
     public function AboutAction(){
-        $this->render("web/view/about.ba.html", ['test'=>'test']);
+        $this->render("web/view/about.ba.html");
     }
 
     /**

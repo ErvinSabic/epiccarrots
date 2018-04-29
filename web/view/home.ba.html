@@ -1,6 +1,46 @@
 {% extends 'web/view/masters/base.ba.html' %}
 
-{% I dont exist %}
 {% block 'body' %}
-{{test}}
+<div class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('./web/img/hero-home.jpg');">
+    <div class="small-12 columns">
+        <h1 style="color:white;">Epic Carrots Crypto Investment</h1>
+        <h2 style="color:white;">See where your friends put their money.</h2>
+        <a href="./?route=/cryptos" class="button">Get Started</a>
+    </div>
+</div>
+<ul class="top-cryptos">
+{% foreach 'cryptos' as 'crypto' %}
+    <li>
+        {crypto.name}<br>
+        <h3>{crypto.symbol}</h3>
+        <hr>
+        ${crypto.price_usd}
+    </li>
+{% endforeach %}
+</ul>
+<div class="row text-center">
+    <div class="small-12 medium-4 columns">
+        <i class="fa fa-users fa-5x" aria-hidden="true"></i>            
+        <h4>See Backers</h4>
+        <p>See what companies stand behind a crypto currency.</p>
+    </div>
+    <div class="small-12 medium-4 columns">
+        <i class="fa fa-handshake-o fa-5x" aria-hidden="true"></i>            
+        <h4>Watch Your Friend Invest</h4>
+        <p>See what your friends have in their Portfolio!</p>
+    </div>
+    <div class="small-12 medium-4 columns">
+        <i class="fa  fa-book fa-5x" aria-hidden="true"></i>            
+        <h4>Watch Your Portfolio</h4>
+        <p>Keep track of your profits and loss based on current prices!</p>
+    </div>
+</div>
+<div class="cta">
+    <div class="row">
+        <div class="small-12 columns text-center">
+            <h1>Ready to get started?</h1>
+            <a href="#" class="button secondary">Sign Up</a>
+        </div>
+    </div>
+</div>
 {% endblock 'body' %}

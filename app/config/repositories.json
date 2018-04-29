@@ -1,0 +1,10 @@
+{
+    "Repositories":{
+        "Comment":{
+            "table":"comment"
+        },
+        "User":{
+            "table":"user"
+        }
+    }
+}

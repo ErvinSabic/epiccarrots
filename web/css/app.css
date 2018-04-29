@@ -1,3 +1,42 @@
-h1 {
-    color: green;
+.top-cryptos { 
+    background-color: rgb(244, 244, 244);
+    margin-left: 0;
+    text-align: center;
+}
+
+.top-cryptos li {
+    display:inline-block;
+    text-align: center;
+    width: 19%;
+    padding-top:2em;
+    padding-bottom: 2em;
+}
+
+.cta {
+    background-color: #008CBA;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.cta h1 {
+    color: white;
+}
+
+.cta-button {
+    float:right;
+}
+@media screen and (max-width: 39.9375em) {
+    .top-cryptos li {
+        display: block;
+        width: 100%;
+    }
+    .cta-button{
+        float: none;
+    }
+}
+
+footer {
+    background-color: rgb(50, 50, 50);
+    padding-top: 2em;
+    padding-bottom: 2em;
 }

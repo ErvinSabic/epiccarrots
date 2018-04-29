@@ -4,25 +4,29 @@
             "class":"PublicController", 
             "file":"src/Controller/PublicController.php",
             "function":"IndexAction",
-            "requiredRequestType":"GET"
+            "requiredRequestType":"GET", 
+            "authenticated":"Anonymous"
         },
         "/about":{
             "class":"PublicController", 
             "file":"src/Controller/PublicController.php",
             "function":"AboutAction",
-            "requiredRequestType":"GET"
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
         },
-        "/crypto":{
+        "/cryptos":{
             "class":"PublicController", 
             "file":"src/Controller/PublicController.php",
             "function":"CryptoAction",
-            "requiredRequestType":"GET"
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
         },
         "/contact":{
             "class":"PublicController", 
             "file":"src/Controller/PublicController.php",
             "function":"ContactAction",
-            "requiredRequestType":"GET"
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
         }
     }
 }

@@ -15,6 +15,7 @@
     require_once('data/BaseManager.php');
     require_once('data/APIRequest.php');
     require_once('http/Request.php');
+    require_once('data/RepositoryLoader.php');    
     /**
      * Rendering 
      */

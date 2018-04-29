@@ -9,13 +9,14 @@ class RouteDeserializer{
         $registeredData = fread($registered, filesize('./app/config/routing.json'));
         $routes = json_decode($registeredData)->routes;
         $requested = $options['route'];
-        $response = $routes->$requested;
 
         if(!isset($routes->$requested))
         /** Check to see if route exists */
         {
             die('Route not found. Did you set the route within the routing file?');
         }
+
+        $response = $routes->$requested;        
 
         if($options['method'] != $response->requiredRequestType)
         /** Check to see if the proper request type is being made*/

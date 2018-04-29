@@ -15,7 +15,7 @@ class BaseController{
     /**
     * Render a file and replace all parmas with curly brackets 
     */
-    public function render($template, $data){
+    public function render($template, $data = ['']){
         $engine = new RenderEngine();
         $engine->render($template, $data);
     }

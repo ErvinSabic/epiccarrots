@@ -1,14 +1,21 @@
 {% extends 'web/view/masters/base.ba.html' %}
 
-{% I dont exist %}
 {% block 'body' %}
+<div class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('./web/img/hero-home.jpg');">
+    <div class="small-12 columns">
+        <h1 style="color:white;">Epic Carrots Crypto Investment</h1>
+        <h2 style="color:white;">See where your friends put their money.</h2>
+        <a href="./?route=/cryptos" class="button">Get Started</a>
+    </div>
+</div>
 <div class="row">
     <div class="small-12 medium-6 columns">
         <h3>Learn About Crypto</h3>
-        <p></p>
+        <p>Learn about the different companies backing crypto currencies and where their focus is.</p>
     </div>
     <div class="small-12 medium-6 columns">
         <h3>See Where People Invest</h3>
+        <p>People can make accounts and add coins to their portfolio.</p>
     </div>
 </div>
 {% endblock 'body' %}

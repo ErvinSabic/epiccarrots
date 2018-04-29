@@ -117,7 +117,7 @@ Class TemplateFunctions {
         $i = 0;
         while($i != count($this->data[$requestedData])){
             $ret = $ret.$innerRequest;            
-            $currentData = $this->data[$requestedData][$i];
+            $currentData = (array) $this->data[$requestedData][$i];
             foreach($realKeys as $realKey=>$realData){
                 $ret = str_replace($realKey, $currentData[$realData], $ret);
             }
