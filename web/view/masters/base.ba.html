@@ -3,11 +3,30 @@
         <link rel="stylesheet" type="text/css" href="./web/css/normalize.css">
         <link rel="stylesheet" type="text/css" href="./web/css/foundation.css">
         <link rel="stylesheet" type="text/css" href="./web/css/app.css">
+        <link rel="stylesheet" type="text/css" href="./web/css/luxbar.css">
+        <link rel="stylesheet" type="text/csS" href="./web/css/hero.css">
     </head>
     <body>
-        <header><h1>Awesome Website</h1></header>
+        <header>
+            <div id="luxbar" class="luxbar-default">
+                <input type="checkbox" class="luxbar-checkbox" id="luxbar-checkbox"/>
+                <div class="luxbar-menu luxbar-menu-right luxbar-menu-dark">
+                    <ul class="luxbar-navigation">
+                        <li class="luxbar-header">
+                            <a href="#" class="luxbar-brand">Epic Carrots</a>
+                            <label class="luxbar-hamburger luxbar-hamburger-spin" 
+                            id="luxbar-hamburger" for="luxbar-checkbox"> <span></span> </label>
+                        </li>
+                        <li class="luxbar-item"><a href="/">Home</a></li>
+                        <li class="luxbar-item"><a href="/about">About</a></li>
+                        <li class="luxbar-item"><a href="/order">Cryptos</a></li>
+                        <li class="luxbar-item"><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
 
         <main>{% block 'body' %}</main>
-        <footer><h3>Awesome Footer</h3></footer>
+        <footer></footer>
     </body>
 </html>

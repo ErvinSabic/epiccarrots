@@ -11,6 +11,18 @@
             "file":"src/Controller/PublicController.php",
             "function":"AboutAction",
             "requiredRequestType":"GET"
+        },
+        "/crypto":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoAction",
+            "requiredRequestType":"GET"
+        },
+        "/contact":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"ContactAction",
+            "requiredRequestType":"GET"
         }
     }
 }

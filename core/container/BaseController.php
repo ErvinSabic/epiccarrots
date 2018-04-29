@@ -27,6 +27,13 @@ class BaseController{
         $route = filter_input(INPUT_GET, 'route', FILTER_SANITIZE_SPECIAL_CHARS);
         return $route;        
     }
+
+    /**
+     * Gets PDO Connection
+     */
+    public function getConnection(){
+        return $this->connection->getConnection();
+    }
     
 }
 

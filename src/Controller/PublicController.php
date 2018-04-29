@@ -1,16 +1,36 @@
 <?php 
 
 use Core\Container\BaseController;
-use Core\Data\Connection;
+use Core\Data\APIManager;
 
 Class PublicController extends BaseController{
+    /**
+     * @Route("/")
+     */
     public function IndexAction(){
-        $connection = new Connection;
-        $this->render('web/view/test.ba.html', ['test'=>'hello']);
+        $connection = $this->getConnection();
+        $this->render('web/view/home.ba.html', ['test'=>'hello']);
     }
 
+    /**
+     * @Route("/about")
+     */
     public function AboutAction(){
-        echo "Hi";
+        $this->render("web/view/about.ba.html", ['test'=>'test']);
+    }
+
+    /**
+     * @Route("/cryptos")
+     */
+    public function CryptoAction(){
+        $this->render("web/view/cryptos.ba.html");
+    }
+
+    /**
+     * @Route("/contact")
+     */
+    public function ContactAction(){
+        $this->render("web/view/contact.ba.html");
     }
 }
 
