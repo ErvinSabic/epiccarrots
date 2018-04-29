@@ -55,10 +55,10 @@ Class TemplateFunctions {
     public function serveFunction($functionString, $location){
         /**
          * DEV ONLY 
-         *
-         *$play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
-         *echo $play;
-         *
+         */
+         $play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
+         echo $play;
+         /**
          * END DEV ONLY 
          */
         if(!isset($this->availableFunctions[$functionString])){
@@ -130,16 +130,16 @@ Class TemplateFunctions {
          * Find block locations on master
          */
         $match = preg_match("/\{\% block .* \%\}/", $master, $replace);
-        $blockMatch = preg_match("", $sub, $data);
         foreach($replace as $block){
             $blockName = preg_match("/\'.*\'/", $block, $blockRenderedTemp);
-            $endTag = "{% end block '".$blockRenderedTemp[0] ."' %}";
-            $replacement = $this->get_string_between($sub,$block,$endTag);
-            var_dump($replacement);
+            $endTag = "{% end block ".$blockRenderedTemp[0] ." %}";
+            $replacement = $this->get_string_between($this->content,$block,$endTag);
+            $this->content = preg_replace("/\{\% block ".$blockRenderedTemp[0]." \%\}/", $replacement, $master);
+            print_r($this->content);
         }
     }
 
-    function get_string_between($string, $start, $end){
+    public function get_string_between($string, $start, $end){
         $string = " ".$string;
         $ini = strpos($string,$start);
         $ini += strlen($start);   

@@ -43,7 +43,7 @@ class RenderEngine{
          */
         $functions = preg_match_all("/\{\% .* \%\}/", $this->file, $functionInstances);
         $ret = $this->runFunctions($functionInstances[0], $data);
-        return eval('?>' . $this->file . '<?php');
+        return eval('?>' . $ret . '<?php');
     }
 
     /**
