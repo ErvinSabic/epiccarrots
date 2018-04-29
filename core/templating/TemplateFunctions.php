@@ -11,9 +11,9 @@ Class TemplateFunctions {
      * Put the ones that end your function first. THEY MATTER
      */
     protected $availableFunctions = [
-        'end foreach'=>'renderEndForeach',
-        'end block' => 'renderEndblock',
-        'end if' => 'renderEndif',
+        'endforeach'=>'renderEndForeach',
+        'endblock' => 'renderEndblock',
+        'endif' => 'renderEndif',
         'extends' => 'renderMaster',
         'foreach' => 'renderForeach', 
         'if' => 'renderIf',
@@ -54,12 +54,11 @@ Class TemplateFunctions {
      */
     public function serveFunction($functionString, $location){
         /**
-         * DEV ONLY 
-         */
-         $play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
-         echo $play;
-         /**
-         * END DEV ONLY 
+         * DEV ONLY
+         */ 
+         /** $play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
+          echo $play; */
+         /** END DEV ONLY 
          */
         if(!isset($this->availableFunctions[$functionString])){
             die("Template Function Exception: '". $functionString. "' Could not be served. Did you misspell the function or not include it as an available function?");
@@ -91,10 +90,42 @@ Class TemplateFunctions {
      * @param string $functionString
      * @param string $location
      */
-    public function renderForeach(){
+    public function renderForeach($functionString, $location){
+        $realKeys = [];
         if($this->data == null){
             die('Template Function Exception: You cannot fire a foreach statement without data');
         }
+        $match = preg_match("/\{\% foreach .*. as .* \%\}/", $this->content, $param);
+        foreach($param as $item){
+            $filter = preg_match("/\'.*\'/", $item, $options);  
+            $foreachParams = array_filter(explode("'", $options[0]));
+        }
+
+        $requestedData = $foreachParams[1];
+        $displayed = $foreachParams[3];
+        if(!isset($this->data[$requestedData])){
+            die("Template Function Exception: The variable '$requestedData' in the foreach is not being returned or setup properly. Did you misspell it?");
+        }
+        if(!is_array($this->data[$requestedData])){
+            die("Template Function Exception: The variable '$requestedData' in the foreach statement is not an array");
+        }
+        $innerRequest = $this->get_string_between($this->content, $param[0], "{% endforeach %}" );
+        $innerMatch = preg_match_all("/\{".$displayed."\..*\}/", $innerRequest, $foreachMatches);
+        $prefix = $displayed;       
+        $ret = $innerRequest; 
+        foreach($foreachMatches[0] as $real){
+            $a = str_replace("{".$prefix.".","",$real);
+            $b = str_replace("}","",$a);
+            $realKeys[$real]= $b;
+        };
+        for($i = 0; $i!=count($this->data[$requestedData]); $i++){
+            $currentData = $this->data[$requestedData][$i];
+            foreach($realKeys as $realKey=>$realData){
+                preg_replace("/\{".$displayed."\.".$realData."\}/", $currentData[$realData],$ret);
+            }
+            $ret = $ret.$innerRequest;
+        };
+        print_r($foreachMatches);
     }
 
     /**
@@ -102,15 +133,15 @@ Class TemplateFunctions {
      * @param string $location
      */
     public function renderEndforeach(){
-
+        /** Leave blank, this is here to keep things in order for the other functions */
     }
 
     public function renderEndBlock(){
-
+        /** Leave blank, this is here to keep things in order for the other functions */
     }
 
     public function renderEndIf(){
-
+        /** Leave blank, this is here to keep things in order for the other functions */
     }
 
     public function renderIf(){
@@ -118,7 +149,7 @@ Class TemplateFunctions {
     }
 
     public function renderBlock(){
-
+        /** Leave blank, this is here to keep things in order for the other functions */
     }
 
     /**
@@ -132,10 +163,10 @@ Class TemplateFunctions {
         $match = preg_match("/\{\% block .* \%\}/", $master, $replace);
         foreach($replace as $block){
             $blockName = preg_match("/\'.*\'/", $block, $blockRenderedTemp);
-            $endTag = "{% end block ".$blockRenderedTemp[0] ." %}";
+            $endTag = "{% endblock ".$blockRenderedTemp[0] ." %}";
             $replacement = $this->get_string_between($this->content,$block,$endTag);
             $this->content = preg_replace("/\{\% block ".$blockRenderedTemp[0]." \%\}/", $replacement, $master);
-            print_r($this->content);
+            echo $this->content;
         }
     }
 
