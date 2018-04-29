@@ -5,14 +5,11 @@ use Core\Templating\TemplateFunctions;
 
 class RenderEngine{
 
-    protected $availableFunctions = [
-
-    ];
+    protected $availableFunctions;
 
     protected $file;
 
     protected $data;
-
     /**
      * @param string $template
      * @param array $data
@@ -45,7 +42,7 @@ class RenderEngine{
          * Run through functions engine
          */
         $functions = preg_match_all("/\{\% .* \%\}/", $this->file, $functionInstances);
-        $this->runFunctions($functionInstances[0], $data);
+        $ret = $this->runFunctions($functionInstances[0], $data);
         return eval('?>' . $this->file . '<?php');
     }
 
@@ -54,6 +51,8 @@ class RenderEngine{
      * @param array $data
      */
     public function runFunctions($pregString, $data = null){
+        $engine = new TemplateFunctions($this->file);
+        $this->availableFunctions = $engine->getAvailableFunctions(true);
         $checked = [];
         foreach($pregString as $string){
             if((isset($checked[$string]))){
@@ -61,7 +60,7 @@ class RenderEngine{
             }
             else {
                 foreach($this->availableFunctions as $item){
-                    if(strpos($string, $item) !== false and !isset($checked[$string])){
+                    if(strpos($string, $item) !== false && !isset($checked[$string])){
                         $checked[$string]='Checked';
                         $this->executeFunction($item, $string);
                     }else {
@@ -80,7 +79,6 @@ class RenderEngine{
         $functionEngine = new TemplateFunctions($this->file);
         $functionEngine->setData($this->data);
         $functionEngine->serveFunction($function, $params);
-        
     }
 
     /**
