@@ -1,0 +1,29 @@
+{% extends 'web/view/masters/base.ba.html' %}
+
+{% block 'body' %}
+<div class="row">
+    <div class="small-12 columns text-center">
+        <h2>Reviews</h2>
+    </div>
+</div>
+    <div class="wide-row">
+        <table class="display">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% foreach 'reviews' as 'review' %}
+                    <tr>
+                        <td>{review.title}</td>
+                        <td>{review.author}</td>
+                        <td><a href="./?route=/cryptos/reviews/view/&id={review.id}">View</a></td>
+                    </tr>
+                {% endforeach %}
+            </tbody>
+        </table>
+    </div>
+{% endblock 'body' %}

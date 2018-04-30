@@ -1,0 +1,18 @@
+{% extends 'web/view/masters/base.ba.html' %}
+
+{% block 'body' %}
+<div class="row">
+    <div class="small-12 columns text-center">
+        <h2>{{title}}</h2>
+        <strong>By: {{author}}</strong>
+    </div>
+</div>
+    <div class="row">
+        <div class="small-12 columns text-center">
+            {% if (allow_edit) %}
+            <a href="">Edit</a>
+            {% endif %}
+            <p>{{text_body}}</p>
+        </div>
+    </div>
+{% endblock 'body' %}

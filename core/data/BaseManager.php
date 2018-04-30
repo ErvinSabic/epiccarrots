@@ -60,6 +60,30 @@ class BaseManager {
         $query = $this->connection->prepare($q); 
         return $query->execute();
     }
+
+    /**
+     * @param object $item
+     * @return BaseManager
+     */
+    public function persist($item){
+        $columnsString = '';
+        $valuesString ='';
+        foreach($item as $key=>$value){
+            if($key == "id"){
+                continue;
+            }
+            $columnsString = $columnsString.$key.',';
+            $valuesString = $valuesString."'".$value."',";
+        }
+        $columnsString = '('.$columnsString.')';
+        $valuesString = '('.$valuesString.')';
+        $columnsString = str_replace(',)', ')',$columnsString);
+        $valuesString = str_replace(',)', ')',$valuesString);
+
+        $query = $this->connection->prepare("INSERT INTO ".$this->table." ".$columnsString. " VALUES ".$valuesString.";");
+        $query->execute();
+        $this->pdo->disconnect();
+    }
 }
 
 ?>

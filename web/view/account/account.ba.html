@@ -1,0 +1,14 @@
+{% extends 'web/view/masters/base.ba.html' %}
+
+{% block 'body' %}
+<div class="row">
+    <div class="small-12 columns">
+        <h1>Welcome {{username}}!</h1>
+    </div>
+</div>
+<div class="row panel">
+    <div class="small-12 columns">
+        <a href="./?route=/logout" class="button alert">Logout</a>
+    </div>
+</div>
+{% endblock 'body' %}

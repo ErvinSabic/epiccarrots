@@ -1,5 +1,30 @@
 {% extends 'web/view/masters/base.ba.html' %}
 
 {% block 'body' %}
-
+<div class="row">
+    <div class="small-12 columns">
+        <h3>Sign up</h3>
+    </div>
+    <form action=".?route=/signupAttempt" method="POST">
+        <div class="panel">
+            <div class="row">
+                <div class="small-12 medium-6 columns">
+                    Username
+                    <input type="text" name="username">
+                </div>
+                <div class="small-12 medium-6 columns">
+                    Email
+                    <input type="email" name="email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    Password
+                    <input type="password" name="password">
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Sign Up" class="button">
+    </form>
+</div>
 {% endblock 'body' %}

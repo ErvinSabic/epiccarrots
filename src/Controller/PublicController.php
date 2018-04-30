@@ -36,10 +36,113 @@ Class PublicController extends BaseController{
      */
     public function CryptoDetailAction(){
         $coin = $this->getURLData()['coin'];
-        $manager = $this->getManager("Crypto");
-        $data = $manager->findBy('ticker', $coin);
+        $APIManager = new APIManager;        
+        $APIData = $APIManager->getRequest("https://api.coinmarketcap.com/v1/ticker/".$coin."/");
+        $cryptoManager = $this->getManager("Crypto");
+        $backerManager = $this->getManager("Backer");
+        $reviewManager = $this->getManager("Review");
+        $backers = $backerManager->findBy('crypto_market_id', $coin);
+        $reviews = $reviewManager->findBy('crypto_id', $coin);
+
+        $data = $cryptoManager->findBy('coin_market_id', $coin);
+        if(isset($data[0])){
+            $data = $data[0];
+            $data['backerCount'] = count($backers);
+            $data['reviewCount'] = count($reviews);
+        }else {
+            //Make a new one if you can't find it.
+            $crypto = New Crypto;
+            $crypto->setName($APIData[0]->name);
+            $crypto->setTicker($APIData[0]->symbol);
+            $crypto->setScamCoin("Unknown");
+            $crypto->setCoinMarketId($APIData[0]->id);
+            $cryptoManager->persist($crypto);
+            $data = $cryptoManager->findBy('coin_market_id', $coin);       
+            $data['backerCount'] = count($backers);
+            $data['reviewCount'] = count($reviews);  
+        }
+
+        $data = array_merge($data, (array) $APIData[0], ['backers'=>$backers]);
+        return $this->render("web/view/cryptos/detail.ba.html", $data);
+
     }
 
+    /**
+     * @Route("/cryptos/reviews/")
+     */
+    public function CryptoReviewsIndexAction(){
+        $urlData = $this->getURLData();
+        $reviewManager = $this->getManager("Review");
+        $userManager = $this->getManager("User");
+        $cryptoManager = $this->getManager("Crypto");
+        $APIManager = new APIManager;                
+        $reviews = [];
+
+        if(isset($urlData['coin'])){
+            $coin = $this->getURLData()['coin'];
+            $data = $reviewManager->findBy('crypto_id', $coin);
+        }else {
+            $data = $reviewManager->findAll();
+        }
+        foreach($data as $item){
+            $user = $userManager->find($item['user_id']);
+            $cryto = 
+            $author = $user['username'];
+            $item = array_merge($item, [
+                'author'=>$author,
+                'crypto_name'=> $cryptoManager->getNameFromId($item['crypto_id'], $APIManager)
+            ]);
+            array_push($reviews, $item);
+        }
+        return $this->render("web/view/review/review.ba.html", ['reviews'=>$reviews]);
+    }
+
+    /**
+     * @Route("/cryptos/reviews/add")
+     */
+    public function CryptoReviewAddAction(){
+        return $this->render("web/view/review/add.ba.html");
+    }
+
+    /**
+     * @Route("/cryptos/reviews/addAttempt")
+     */
+    public function CryptoReviewAddActionAttempt(){
+        $review = New Review;
+        $data = $this->getData();
+        $review->setTitle();
+        $review->setTextBody();
+        $review->setUserId();
+        $review->setCryptoId();
+    }
+    /**
+     * @Route("/cryptos/reviews/edit")
+     */
+    public function CryptoReviewsEditAction(){
+        $urlData = $this->getUrlData();
+        $reviewId = $urlData['id'];
+        $reviewManager = $this->getManager("Review");
+        $userManager = $this->getManager("User");
+        $review = $reviewManager->find($reviewId);
+    }
+    /**
+     * @Route("/cryptos/reviews/view/")
+     */
+    public function CryptoReviewsDetailAction() {
+        $urlData = $this->getUrlData();
+        $reviewId = $urlData['id'];
+        $reviewManager = $this->getManager("Review");
+        $userManager = $this->getManager("User");
+
+        $data = $reviewManager->find($reviewId);
+        $data['author'] = $userManager->find($data['user_id'])['username'];
+        $data['allow_edit'] = '';
+        if($userManager->find($data['user_id'] == $this->getCurrentLoggedInID())){
+            $data['allow_edit'] = "Yes";
+        }
+
+        return $this->render("web/view/review/detail.ba.html", $data);
+    }
     /**
      * @Route("/contact")
      */

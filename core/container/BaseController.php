@@ -4,6 +4,7 @@ namespace Core\Container;
 
 use Core\Templating\RenderEngine;
 use Core\Data\RepositoryLoader; 
+use core\Security\SessionManager;
 
 class BaseController{
     /**
@@ -50,6 +51,25 @@ class BaseController{
     public function redirect($route){
         header("Location: ".$route);
         die();
+    }
+
+    /**
+     * Dumps data for debug purposes
+     */
+    public function dump($var){
+        echo "<pre>";
+        print_r($var);
+        echo "</pre>";
+    }
+
+    /**
+     * Gets the ID of the currently logged in user
+     */
+    public function getCurrentLoggedInID(){
+        $sessionManager = new SessionManager; 
+        $userManager = $this->getManager("User");
+        $data = $sessionManager->getUserId($userManager);
+        return $data;
     }
 }
 

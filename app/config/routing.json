@@ -28,6 +28,48 @@
             "requiredRequestType":"GET",
             "authenticated":"Anonymous"
         },
+        "/cryptos/reviews/":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoReviewsIndexAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/reviews/view/":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoReviewsDetailAction", 
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/reviews/add":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoReviewAddAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/reviews/edit":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoReviewEditAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/reviews/addAttempt":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoReviewAddActionAttempt",
+            "requiredRequestType":"POST",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/reviews/editAttempt":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoReviewEditActionAttempt",
+            "requiredRequestType":"POST",
+            "authenticated":"Anonymous"
+        },
         "/contact":{
             "class":"PublicController", 
             "file":"src/Controller/PublicController.php",
@@ -49,12 +91,33 @@
             "requiredRequestType":"POST",
             "authenticated":"Anonymous"
         },
+        "/logout":{
+            "class":"AccountController",
+            "file":"src/Controller/AccountController.php",
+            "function":"LogoutAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
         "/signup":{
             "class":"AccountController",
             "file":"src/Controller/AccountController.php",
             "function":"SignupAction",
             "requiredRequestType":"GET",
             "authenticated":"Anonymous"
+        },
+        "/signupAttempt":{
+            "class":"AccountController",
+            "file":"src/Controller/AccountController.php",
+            "function":"SignupAttemptAction",
+            "requiredRequestType":"POST",
+            "authenticated":"Anonymous"
+        }, 
+        "/account":{
+            "class":"AccountController",
+            "file":"src/Controller/AccountController.php",
+            "function":"AccountAction",
+            "requiredRequestType":"GET",
+            "authenticated":"User"
         }
     }
 }

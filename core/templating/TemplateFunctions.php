@@ -1,6 +1,8 @@
 <?php 
 namespace Core\Templating;
 
+use Core\Security\SessionManager;
+
 Class TemplateFunctions {
 
     protected $content;
@@ -12,12 +14,14 @@ Class TemplateFunctions {
      */
     protected $availableFunctions = [
         'extends' => 'renderMaster',
+        'block' => 'renderBlock',        
         'endblock' => 'renderEndblock',
-        'block' => 'renderBlock',
         'endforeach'=>'renderEndForeach',
         'foreach' => 'renderForeach',
         'endif' => 'renderEndif',         
         'if' => 'renderIf',
+        'userrequired' => 'renderUserRequired',                
+        'enduserrequired'=>'renderEndUserRequired',        
     ];
 
     public function __construct($page){
@@ -47,12 +51,14 @@ Class TemplateFunctions {
         }
         
     }
+    
 
     /**
      * @param string $functionString
      * @param string $location
      */
     public function serveFunction($functionString, $location){
+        /** DEV TESTING ONLY */
         /**$play = "<strong>Function String: </strong>".$functionString."<strong> Location:</strong>".$location. "<br>";
         echo $play; */
         if(!isset($this->availableFunctions[$functionString])){
@@ -62,6 +68,13 @@ Class TemplateFunctions {
         $this->$function($functionString, $location);
     }
 
+    public function renderUserRequired($functionString, $location){
+       $contentLocations = preg_match("/\{\% userrequired \%\}/", $this->content, $items);
+       foreach($items as $item){
+           $locked = $this->get_string_between($this->content, $item[0],"{% enduserrequired %}");
+           print_r($locked);
+       }
+    }
     /**
      * @param string $functionString
      * @param string $location
@@ -147,6 +160,14 @@ Class TemplateFunctions {
         /** Leave blank, this is here to keep things in order for the other functions */
     }
 
+    public function renderEndUserRequired(){
+        /** Leave blank, this is here to keep things in order for the other functions */
+    }
+
+    /**
+     * @param string $functionString
+     * @param string $location
+     */
     public function renderIf($functionString, $location){
         $match = preg_match("/\{\% if \(.*\) \%\}/", $this->content, $matches); {
             foreach($matches as $item){
@@ -155,7 +176,7 @@ Class TemplateFunctions {
                 $a = str_replace("(", "", $condition[0]);
                 $b = str_replace(")" ,"", $a);
                 $condition[0] = $b;
-                if(isset($this->data[$condition[0]])){
+                if(isset($this->data[$condition[0]]) || $this->data[$condition[0]] != '' || $this->data[$condition[0]] == true){
                     $this->content = str_replace($location, '', $this->content);
                     $this->content = str_replace("{% endif %}", '', $this->content);
                 }else {
@@ -190,6 +211,9 @@ Class TemplateFunctions {
 
     /**
      * Gets information between two starting and ending tags
+     * @param string $string
+     * @param string $start 
+     * @param string $end
      */
 
     public function get_string_between($string, $start, $end){

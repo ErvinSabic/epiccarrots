@@ -3,27 +3,32 @@
         "Comment":{
             "table":"comment",
             "manager":"CommentManager",
-            "file":"src/Managers/CommentManager.php"
+            "file":"src/Managers/CommentManager.php",
+            "model":"src/Models/Comment.php"
         },
         "User":{
             "table":"user",
             "manager":"UserManager",
-            "file":"src/Managers/UserManager"
+            "file":"src/Managers/UserManager.php",
+            "model":"src/Models/User.php"
         },
         "Backer":{
             "table":"backer",
             "manager":"BackerManager",
-            "file":"src/Managers/BackerManager"
+            "file":"src/Managers/BackerManager.php",
+            "model":"src/Models/Backer.php"
         },
         "Crypto":{
             "table":"crypto",
             "manager":"CryptoManager",
-            "file":"src/Managers/CryptoManager.php"
+            "file":"src/Managers/CryptoManager.php",
+            "model":"src/Models/Crypto.php"
         },
         "Review":{
             "table":"review",
             "manager":"ReviewManager",
-            "file":"src/Managers/ReviewManager.php"
+            "file":"src/Managers/ReviewManager.php",
+            "model":"src/Models/Review.php"
         }
     }
 }

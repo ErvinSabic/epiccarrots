@@ -1,0 +1,9 @@
+{% extends 'web/view/masters/base.ba.html' %}
+
+{% block 'body' %}
+<form action="" method="POST">
+    <input type="text" name="title">
+    <input type="hidden" name="user" value="{{id}}">
+    <textarea name="text_body"></textarea>
+</form>
+{% endblock 'body' %}

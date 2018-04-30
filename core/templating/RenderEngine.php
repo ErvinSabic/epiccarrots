@@ -2,6 +2,7 @@
 namespace Core\Templating;
 
 use Core\Templating\TemplateFunctions;
+use Core\Security\SessionManager;
 
 class RenderEngine{
 
@@ -15,6 +16,12 @@ class RenderEngine{
      * @param array $data
      */
     public function render($template, $data = ['']){
+        $security = new SessionManager;
+        if($security->checkIfLoggedIn()){
+            $data = array_merge($data, ['USER_Username'=>$_SESSION['Username'], 'USER_NoUser'=>False]);
+        }else {
+            $data = array_merge($data, ['USER_Username'=>null, 'USER_NoUser'=>True]);
+        }
         /** Check to see if file exists */
         if(!file_exists($template)){
             die("Template file does not exist. File: ".$template);

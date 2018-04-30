@@ -1,0 +1,96 @@
+{% extends 'web/view/masters/base.ba.html' %}
+
+{% block 'body' %}
+    <div class="row">
+        <div class="small-12 medium-6 text-left columns">
+            <h2>{{symbol}} | {{name}}</h2>
+        </div>
+        <div class="small-12 medium-6 text-right columns">
+            <h2>Rank: {{rank}}</h2>
+            {% if (USER_Username) %}
+            <a href="#" class="button">Write Review</a>
+            <a href="#" class="button">Add Backer</a>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div class="panel">
+        <div class="row">
+            <div class="small-12 medium-4 columns">
+                <strong>Scam Coin:</strong>
+                {{scam_coin}}
+            </div>
+            <div class="small-12 medium-4 columns">
+                <strong>Review Count:</strong>
+                <a href="./?route=/cryptos/reviews/&coin={{id}}">View:</a>{{reviewCount}}
+            </div>
+            <div class="small-12 medium-4 columns">
+                <strong>Backer Count:</strong>
+                {{backerCount}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 medium-4 columns">
+                <strong>Available Supply:</strong>
+                {{available_supply}}
+            </div>
+            <div class="small-12 medium-4 columns">
+                <strong>Total Supply:</strong>
+                {{total_supply}}
+            </div>
+            <div class="small-12 medium-4 columns">
+                <strong>Max Supply:</strong>
+                {{max_supply}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-6 columns panel text-center">
+            <h1>$ {{price_usd}}</h1>
+            USD
+        </div>
+        <div class="small-12 medium-6 columns panel text-center">
+            <h1>{{price_btc}}</h1>
+            BTC
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns text-center">
+            <h3>Percent Changes</h3>
+        </div>
+    </div>
+    <div class="row panel callout radius">
+        <div class="small-12 medium-4 columns text-center">
+            <h3>1 Hour</h3>
+            <h1>{{percent_change_1h}}</h1>
+        </div>
+        <div class="small-12 medium-4 columns text-center">
+            <h3>24 Hours</h3>
+            <h1>{{percent_change_24h}}</h1>
+        </div>
+        <div class="small-12 medium-4 columns text-center">
+            <h3>1 Week</h3>
+            <h1>{{percent_change_7d}}</h1>
+        </div>
+    </div>
+    <div class="wide-row">
+        <table class="display">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Website</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% foreach 'backers' as 'backer' %}
+                <tr>
+                    <td>{backer.name}</td>
+                    <td>{backer.description}</td>
+                    <td>{backer.website}</td>
+                </tr>
+                {% endforeach %}
+            </tbody>
+        </table>
+    </div>
+{% endblock 'body' %}

@@ -16,9 +16,16 @@ class RepositoryLoader {
         $repository = $repositories->$requested;
 
         if(!file_exists($repository->file)){
-            die("File associated with the repository could not be found. Check your repositories file.");
+            die("File associated with the repository'".$repository->file."' could not be found. Check your repositories file.");
         }else{
             include_once($repository->file);
+        }
+
+        if(isset($repository->model)){
+            if(!file_exists($repository->model)){
+                die("The main repository file is set but the model '".$repository->model."' is not. Check your spelling or see if the file exists");
+            }
+            include_once($repository->model);
         }
 
         if(!class_exists($repository->manager)){
