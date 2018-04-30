@@ -1,0 +1,16 @@
+{% extends 'web/view/masters/base.ba.html' %}
+
+{% block 'body' %}
+    <div class="row">
+        <div class="small-12 columns text-center">
+            <form action="./?route=/loginAttempt" method="POST">
+                <h3>Login Below</h3>
+                Username
+                <input type="text" name="username">
+                Password
+                <input type="password" name="password">
+                <input type="submit" class="button" value="Login">
+            </form>
+        </div>
+    </div>
+{% endblock 'body' %}

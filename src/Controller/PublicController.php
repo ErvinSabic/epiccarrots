@@ -26,7 +26,18 @@ Class PublicController extends BaseController{
      * @Route("/cryptos")
      */
     public function CryptoAction(){
-        $this->render("web/view/cryptos.ba.html");
+        $API = new APIManager;
+        $data = $API->getRequest("https://api.coinmarketcap.com/v1/ticker/");
+        $this->render("web/view/cryptos.ba.html", ['cryptos'=>$data]);
+    }
+
+    /**
+     * @Route("/cryptos/view/")
+     */
+    public function CryptoDetailAction(){
+        $coin = $this->getURLData()['coin'];
+        $manager = $this->getManager("Crypto");
+        $data = $manager->findBy('ticker', $coin);
     }
 
     /**

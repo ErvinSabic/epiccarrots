@@ -23,13 +23,6 @@ class BaseController{
     }
 
     /**
-     * Gets PDO Connection
-     */
-    public function getConnection(){
-        return $this->connection->getConnection();
-    }
-
-    /**
      * Gets associated manager
      */
     public function getManager($requested){
@@ -37,7 +30,27 @@ class BaseController{
         $response = $repositoryLoader->loadRepository($requested);
         return $response;
     }
-    
+
+    /**
+     * Gets data from POST request
+     */
+    public function getData(){
+        return $_POST;
+    }
+
+    /**
+     * Get data from GET request
+     */
+    public function getURLData(){
+        return $_GET;
+    }
+    /**
+     * Redirect the user to a specific route
+     */
+    public function redirect($route){
+        header("Location: ".$route);
+        die();
+    }
 }
 
 ?>

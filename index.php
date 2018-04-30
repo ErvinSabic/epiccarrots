@@ -16,6 +16,9 @@
     use Core\Data\Connection;
     use Core\Http\Request;
 
+    session_name("epiccarrots");
+    session_start();
+
     if(isset($_GET['route'])){
         $route = $_GET['route'];        
     }

@@ -25,6 +25,11 @@
 .cta-button {
     float:right;
 }
+
+.wide-row {
+    margin-left: 2em;
+    margin-right: 2em;
+}
 @media screen and (max-width: 39.9375em) {
     .top-cryptos li {
         display: block;

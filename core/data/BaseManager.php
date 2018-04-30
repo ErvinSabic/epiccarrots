@@ -21,9 +21,12 @@ class BaseManager {
      * @return BaseManager
      */
     public function find(int $id){
-        $query = $this->connection->prepare("SELECT * FROM ".$this->table."WHERE id = :id");
+        $query = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE id = :id".";");
         $query->bindParam(':id', $id);
-        return $query->execute();
+        $query->execute();
+        $ret = $query->fetch();
+        $this->pdo->disconnect();
+        return $ret;
 
     }
     /**
@@ -42,10 +45,11 @@ class BaseManager {
      * @return BaseManager
      */
     public function findBy(string $column, $value){
-        $query = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE :column = :value"); 
-        $query->bindParam(':column', $column);
-        $query->bindParam(':value', $value);
-        return $query->execute();
+        $query = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE ".$column." = '".$value."';"); 
+        $query->execute();
+        $ret = $query->fetchAll();
+        $this->pdo->disconnect();
+        return $ret;
     }
 
     /**

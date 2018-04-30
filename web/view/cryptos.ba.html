@@ -1,5 +1,43 @@
 {% extends 'web/view/masters/base.ba.html' %}
 
 {% block 'body' %}
-{{test}}
+<div class="row">
+    <div class="small-12 columns text-center">
+        <h2>Cryptocurrencies</h2>
+    </div>
+</div>
+    <div class="wide-row">
+        <table class="display">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Price USD</th>
+                    <th>Price BTC</th>
+                    <th>Total Supply</th>
+                    <th>Max Supply</th>
+                    <th>Percent Hour</th>
+                    <th>Percent Day</th>
+                    <th>Percent Year</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% foreach 'cryptos' as 'crypto' %}
+                    <tr>
+                        <td>{crypto.symbol}</td>
+                        <td>{crypto.name}</td>
+                        <td>{crypto.price_usd}</td>
+                        <td>{crypto.price_btc}</td>
+                        <td>{crypto.total_supply}</td>
+                        <td>{crypto.max_supply}</td>
+                        <td>{crypto.percent_change_1h}</td>
+                        <td>{crypto.percent_change_24h}</td>
+                        <td>{crypto.percent_change_7d}</td>
+                        <td><a href="./?route=/cryptos/view/&coin={crypto.symbol}">View</a></td>
+                    </tr>
+                {% endforeach %}
+            </tbody>
+        </table>
+    </div>
 {% endblock 'body' %}

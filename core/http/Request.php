@@ -25,18 +25,6 @@ class Request {
     }
 
     /**
-     * Gets data from POST request
-     */
-    public function getData(){
-        foreach($_POST as $key => $value){
-            if(strpos($key, 'post_data_')>0){
-                $this->data[$key]=$value;
-            }
-        }
-        return $data;
-    }
-
-    /**
      * @param array $options
      */
     public function setOptions($options){

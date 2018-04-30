@@ -21,10 +21,38 @@
             "requiredRequestType":"GET",
             "authenticated":"Anonymous"
         },
+        "/cryptos/view/":{
+            "class":"PublicController",
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoDetailAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
         "/contact":{
             "class":"PublicController", 
             "file":"src/Controller/PublicController.php",
             "function":"ContactAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        }, 
+        "/login":{
+            "class":"AccountController",
+            "file":"src/Controller/AccountController.php",
+            "function":"LoginAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/loginAttempt":{
+            "class":"AccountController",
+            "file":"src/Controller/AccountController.php",
+            "function":"LoginAttemptAction",
+            "requiredRequestType":"POST",
+            "authenticated":"Anonymous"
+        },
+        "/signup":{
+            "class":"AccountController",
+            "file":"src/Controller/AccountController.php",
+            "function":"SignupAction",
             "requiredRequestType":"GET",
             "authenticated":"Anonymous"
         }

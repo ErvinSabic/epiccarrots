@@ -7,8 +7,23 @@
         },
         "User":{
             "table":"user",
-            "manager":"",
-            "file":""
+            "manager":"UserManager",
+            "file":"src/Managers/UserManager"
+        },
+        "Backer":{
+            "table":"backer",
+            "manager":"BackerManager",
+            "file":"src/Managers/BackerManager"
+        },
+        "Crypto":{
+            "table":"crypto",
+            "manager":"CryptoManager",
+            "file":"src/Managers/CryptoManager.php"
+        },
+        "Review":{
+            "table":"review",
+            "manager":"ReviewManager",
+            "file":"src/Managers/ReviewManager.php"
         }
     }
 }

@@ -1,6 +1,8 @@
 <?php 
 namespace Core\Routing;
 
+use Core\Security\SessionManager;
+
 class RouteDeserializer{
 
     public function ProcessRequest($options)

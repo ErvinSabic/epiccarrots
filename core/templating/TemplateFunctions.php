@@ -16,8 +16,8 @@ Class TemplateFunctions {
         'block' => 'renderBlock',
         'endforeach'=>'renderEndForeach',
         'foreach' => 'renderForeach',
+        'endif' => 'renderEndif',         
         'if' => 'renderIf',
-        'endif' => 'renderEndif', 
     ];
 
     public function __construct($page){
@@ -147,8 +147,24 @@ Class TemplateFunctions {
         /** Leave blank, this is here to keep things in order for the other functions */
     }
 
-    public function renderIf(){
-
+    public function renderIf($functionString, $location){
+        $match = preg_match("/\{\% if \(.*\) \%\}/", $this->content, $matches); {
+            foreach($matches as $item){
+                $conditionMatch = preg_match("/\(.*\)/", $item, $condition);
+                $conditionalData = $this->get_string_between($this->content, $item, "{% endif %}");
+                $a = str_replace("(", "", $condition[0]);
+                $b = str_replace(")" ,"", $a);
+                $condition[0] = $b;
+                if(isset($this->data[$condition[0]])){
+                    $this->content = str_replace($location, '', $this->content);
+                    $this->content = str_replace("{% endif %}", '', $this->content);
+                }else {
+                    $this->content = str_replace($location, '', $this->content);
+                    $this->content = str_replace("{% endif %}", '', $this->content);
+                    $this->content = str_replace($conditionalData, '', $this->content);
+                }
+            }
+        }
     }
 
     public function renderBlock(){
@@ -171,6 +187,10 @@ Class TemplateFunctions {
             $this->content = preg_replace("/\{\% block ".$blockRenderedTemp[0]." \%\}/", $replacement, $master);
         }
     }
+
+    /**
+     * Gets information between two starting and ending tags
+     */
 
     public function get_string_between($string, $start, $end){
         $string = " ".$string;

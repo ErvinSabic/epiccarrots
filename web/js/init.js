@@ -1,7 +1,5 @@
-$('table.display').DataTable({
-    responsive: true,
-    dom: 'Bfrtip',
-    buttons: [
-    'csv', 'excel', 'pdf'
-    ]
+$(document).ready(function() {    
+    $('table.display').DataTable({
+        responsive: true,
+    });
 });
