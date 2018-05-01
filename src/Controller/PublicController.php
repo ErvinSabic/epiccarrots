@@ -27,7 +27,7 @@ Class PublicController extends BaseController{
      */
     public function CryptoAction(){
         $API = new APIManager;
-        $data = $API->getRequest("https://api.coinmarketcap.com/v1/ticker/");
+        $data = $API->getRequest("https://api.coinmarketcap.com/v1/ticker/?limit=0");
         $this->render("web/view/cryptos.ba.html", ['cryptos'=>$data]);
     }
 
@@ -98,32 +98,114 @@ Class PublicController extends BaseController{
     }
 
     /**
+     * @Route("/cryptos/backers/add")
+     */
+    public function CryptoBackerAddAction(){
+        $data = $this->getURLData();
+        $cryptoId = $data['coin'];
+        return $this->render("web/view/backer/add.ba.html", ['cryptoId'=>$cryptoId]);
+    }
+
+    /**
+     * @Route("/cryptos/backers/addAttempt")
+     */
+    public function CryptoBackerAddActionAttempt(){
+        $backerManager = $this->getManager("Backer");
+        $backer = new Backer;
+        $data = $this->getData();
+        $backer->setName($data['name']);
+        $backer->setCryptoMarketId($data['crypto_market_id']);
+        $backer->setWebsite($data['website']);
+        $backer->setDescription($data['description']);
+        $backerManager->persist($backer);
+        $this->redirect("./");
+    }
+
+    /**
+     * @Route("/cryptos/backers/edit")
+     */
+    public function CryptoBackerEditAction(){
+        $urlData = $this->getURLData();
+        $id = $urlData['id'];
+        $backerManager = $this->getManager("Backer");
+        $data = $backerManager->find($id);
+        return $this->render("web/view/backer/edit.ba.html", $data);
+    }
+
+    /**
+     * @Route("/cryptos/backers/editAttempt")
+     */
+    public function CryptoBackerEditActionAttempt(){
+        $backerManager = $this->getManager("Backer");
+        $backer = new Backer;
+        $data = $this->getData();
+        $backer->setId($data['id']);
+        $backer->setName($data['name']);
+        $backer->setCryptoMarketId($data['crypto_market_id']);
+        $backer->setWebsite($data['website']);
+        $backer->setDescription($data['description']);
+        $backerManager->update($backer);
+        return $this->redirect("./");
+    }
+
+    /**
      * @Route("/cryptos/reviews/add")
      */
     public function CryptoReviewAddAction(){
-        return $this->render("web/view/review/add.ba.html");
+        $data = $this->getUrlData();
+        $cryptoId = $data['coin'];
+        return $this->render("web/view/review/add.ba.html", ['cryptoId' => $cryptoId]);
     }
 
     /**
      * @Route("/cryptos/reviews/addAttempt")
      */
     public function CryptoReviewAddActionAttempt(){
-        $review = New Review;
-        $data = $this->getData();
-        $review->setTitle();
-        $review->setTextBody();
-        $review->setUserId();
-        $review->setCryptoId();
+        if($this->getCurrentLoggedInID()){
+            $reviewManager = $this->getManager("Review");
+            $review = New Review;
+            $data = $this->getData();
+            $review->setTitle($data['title']);
+            $review->setTextBody($data['text_body']);
+            $review->setUserId($this->getCurrentLoggedInID());
+            $review->setCryptoId($data['crypto_id']);
+            $reviewManager->persist($review);
+            $this->redirect("./?route=/cryptos/reviews/");
+        }
     }
     /**
-     * @Route("/cryptos/reviews/edit")
+     * @Route("/cryptos/reviews/edit/")
      */
-    public function CryptoReviewsEditAction(){
-        $urlData = $this->getUrlData();
-        $reviewId = $urlData['id'];
+    public function CryptoReviewEditAction(){
+        if($id = $this->getCurrentLoggedInID()){
+            $urlData = $this->getUrlData();
+            $reviewId = $urlData['id'];
+            $reviewManager = $this->getManager("Review");
+            $userManager = $this->getManager("User");
+            $review = $reviewManager->find($reviewId);
+            $editorId = $review['user_id'];
+            if($id == $editorId){
+                return $this->render("web/view/review/edit.ba.html", $review);
+            }else {
+                die("You cannot edit this.");
+            }
+        }
+    }
+
+    /**
+     * @Route("/cryptos/reviews/editAttempt")
+     */
+    public function CryptoReviewEditActionAttempt(){
         $reviewManager = $this->getManager("Review");
-        $userManager = $this->getManager("User");
-        $review = $reviewManager->find($reviewId);
+        $review = New Review;
+        $data = $this->getData();
+        $review->setId($data['id']);
+        $review->setTitle($data['title']);
+        $review->setTextBody($data['text_body']);
+        $review->setUserId($this->getCurrentLoggedInID());
+        $review->setCryptoId($data['crypto_id']);
+        $reviewManager->update($review);
+        $this->redirect("./?route=/cryptos/reviews/view/&id=".$review->getId());
     }
     /**
      * @Route("/cryptos/reviews/view/")

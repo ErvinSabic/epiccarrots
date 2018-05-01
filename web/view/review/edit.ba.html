@@ -1,9 +1,18 @@
 {% extends 'web/view/masters/base.ba.html' %}
 
 {% block 'body' %}
-<form action="" method="POST">
-        <input type="text" name="title">
-        <input type="hidden" name="user" value="{{id}}">
-        <textarea name="text_body"></textarea>
-</form>
+<div class="row">
+        <div class="small-12 columns">
+            <h3>Edit Review</h3>
+            <form action=".?route=/cryptos/reviews/editAttempt" method="POST">
+                Title
+                <input type="text" name="title" value="{{title}}">
+                <input type="hidden" name="crypto_id" value="{{crypto_id}} ">
+                <input type="hidden" name="id" value="{{id}}">
+                Body
+                <textarea name="text_body">{{text_body}}</textarea>
+                <input type="submit" value="Submit" class="button">
+            </form>
+        </div>
+    </div>
 {% endblock 'body' %}

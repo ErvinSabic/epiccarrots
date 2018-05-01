@@ -8,8 +8,8 @@
         <div class="small-12 medium-6 text-right columns">
             <h2>Rank: {{rank}}</h2>
             {% if (USER_Username) %}
-            <a href="#" class="button">Write Review</a>
-            <a href="#" class="button">Add Backer</a>
+            <a href="./?route=/cryptos/reviews/add&coin={{id}}" class="button">Write Review</a>
+            <a href="./?route=/cryptos/backers/add&coin={{id}}" class="button">Add Backer</a>
             {% endif %}
         </div>
     </div>
@@ -80,6 +80,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Website</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,6 +89,7 @@
                     <td>{backer.name}</td>
                     <td>{backer.description}</td>
                     <td>{backer.website}</td>
+                    <td><a href="?route=/cryptos/backers/edit&id={backer.id}">Edit</a></td>
                 </tr>
                 {% endforeach %}
             </tbody>

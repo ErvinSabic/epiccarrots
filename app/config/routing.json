@@ -21,6 +21,34 @@
             "requiredRequestType":"GET",
             "authenticated":"Anonymous"
         },
+        "/cryptos/backers/add":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoBackerAddAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/backers/edit":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoBackerEditAction",
+            "requiredRequestType":"GET",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/backers/addAttempt":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoBackerAddActionAttempt",
+            "requiredRequestType":"POST",
+            "authenticated":"Anonymous"
+        },
+        "/cryptos/backers/editAttempt":{
+            "class":"PublicController", 
+            "file":"src/Controller/PublicController.php",
+            "function":"CryptoBackerEditActionAttempt",
+            "requiredRequestType":"POST",
+            "authenticated":"Anonymous"
+        },
         "/cryptos/view/":{
             "class":"PublicController",
             "file":"src/Controller/PublicController.php",

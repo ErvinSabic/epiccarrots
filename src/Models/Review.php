@@ -15,6 +15,11 @@ class Review {
         return $this->id;
     }
 
+    public function setId($id){
+        $this->id = $id;
+        return $this;
+    }
+
     public function getCryptoId(){
         return $this->crypto_id;
     }

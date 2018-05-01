@@ -2,16 +2,19 @@
 
 {% block 'body' %}
     <div class="row">
-        <div class="small-12 columns text-center">
-            <form action="./?route=/loginAttempt" method="POST">
-                <h3>Login Below</h3>
-                Username
-                <input type="text" name="username">
-                Password
-                <input type="password" name="password">
-                <input type="submit" class="button" value="Login">
+        <div class="small-12 columns">
+            <form action="./?route=/cryptos/backers/addAttempt" method="POST">
+                <h3>Add Backer</h3>
+                Name
+                <input type="text" name="name">
+                <input type="hidden" name="crypto_market_id" value="{{cryptoId}}">
+                Website
+                <input type="text" name="website">
+                Description
+                <input type="text" name="description">
+
+                <input type="submit" class="button" value="Submit">
             </form>
-            <a href="./?route=/signup">No Account? Sign up!</a>
         </div>
     </div>
 {% endblock 'body' %}

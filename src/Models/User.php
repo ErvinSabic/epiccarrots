@@ -14,6 +14,11 @@
             return $this->id;
         }
 
+        public function setId($id){
+            $this->id = $id;
+            return $this;
+        }
+
         public function setUsername($username){
             $this->username = $username;
             return $this;

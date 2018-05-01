@@ -69,11 +69,11 @@ class BaseManager {
         $columnsString = '';
         $valuesString ='';
         foreach($item as $key=>$value){
-            if($key == "id"){
+            if(!isset($item->$key) && $key='id'){
                 continue;
             }
             $columnsString = $columnsString.$key.',';
-            $valuesString = $valuesString."'".$value."',";
+            $valuesString = $valuesString."\"".htmlspecialchars($value)."\",";
         }
         $columnsString = '('.$columnsString.')';
         $valuesString = '('.$valuesString.')';
@@ -81,6 +81,23 @@ class BaseManager {
         $valuesString = str_replace(',)', ')',$valuesString);
 
         $query = $this->connection->prepare("INSERT INTO ".$this->table." ".$columnsString. " VALUES ".$valuesString.";");
+        print_r($query);
+        $query->execute();
+        $this->pdo->disconnect();
+    }
+
+    public function update($item){
+        $row = $this->find($item->id);
+        $this->delete($item->id);
+        $this->persist($item);
+    }
+
+    /**
+     * @param int $id
+     * @return BaseManager
+     */
+    public function delete($id){
+        $query = $this->connection->prepare("DELETE FROM ".$this->table." WHERE id=".$id.";");
         $query->execute();
         $this->pdo->disconnect();
     }
