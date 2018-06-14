@@ -1,8 +1,0 @@
-{
-    "host":"127.0.0.1", 
-    "user":"wamp", 
-    "password":"", 
-    "db":"crypto", 
-    "dbms":"mysql",
-    "PDOPersistance":"True"
-}
